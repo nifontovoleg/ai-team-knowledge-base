@@ -33,7 +33,7 @@
 - файл `architecture.drawio` прошёл проверку корректности XML;
 - схема открывается и редактируется в diagrams.net.
 
-### Доказательство
+### схема diagrams.net
 
 ![Архитектурная схема в diagrams.net](evidence/day-01-architecture.png)
 
