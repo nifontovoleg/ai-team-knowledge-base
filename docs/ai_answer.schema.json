@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/nifontovoleg/ai-team-knowledge-base/blob/main/docs/ai_answer.schema.json",
+  "title": "AiAnswerResponse",
+  "description": "Строгий ответ ИИ-операции POST /ai/answer_with_sources. Ответ формируется только по переданному контексту.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "answer",
+    "sources",
+    "confidence",
+    "needs_review"
+  ],
+  "properties": {
+    "answer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Ответ только по переданному контексту, без домыслов. При нехватке данных содержит безопасную формулировку."
+    },
+    "sources": {
+      "type": "array",
+      "description": "Дословные цитаты из переданного контекста. Пустой массив требует needs_review=true.",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "quote"
+        ],
+        "properties": {
+          "quote": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Короткая дословная цитата из контекста."
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "description": "Оценка уверенности. Значение low требует needs_review=true."
+    },
+    "needs_review": {
+      "type": "boolean",
+      "description": "Признак обязательной ручной проверки."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "sources": {
+            "maxItems": 0
+          }
+        },
+        "required": [
+          "sources"
+        ]
+      },
+      "then": {
+        "properties": {
+          "needs_review": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "confidence": {
+            "const": "low"
+          }
+        },
+        "required": [
+          "confidence"
+        ]
+      },
+      "then": {
+        "properties": {
+          "needs_review": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "needs_review": {
+            "const": false
+          }
+        },
+        "required": [
+          "needs_review"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sources": {
+            "minItems": 1
+          },
+          "confidence": {
+            "enum": [
+              "high",
+              "medium"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "answer": "При задержке поставки нужно сообщить клиенту новую дату и причину.",
+      "sources": [
+        {
+          "quote": "Сообщаем клиенту факт задержки, новую дату и причину в одном сообщении."
+        }
+      ],
+      "confidence": "high",
+      "needs_review": false
+    },
+    {
+      "answer": "Данных недостаточно для уверенного ответа. Требуется ручная проверка.",
+      "sources": [],
+      "confidence": "low",
+      "needs_review": true
+    }
+  ]
+}
