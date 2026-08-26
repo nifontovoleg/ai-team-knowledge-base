@@ -104,6 +104,21 @@
 
 Записать демо 2–4 минуты по сценарию в [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md). Ссылку на видео вставить сюда после записи: `_TODO_VIDEO_URL_`.
 
+### Скриншоты (доказательства)
+
+Папка [docs/evidence/](./evidence/):
+
+| Файл | Что видно |
+|------|-----------|
+| `01-documents-showcase.png` | Витрина документов |
+| `02-ask-success.png` | Успешный ответ со источниками (стендап до 10:30) |
+| `02b-ask-success-with-source-doc.png` | Карточка исходного документа |
+| `03-ask-needs-review-input.png` | Вопрос без данных в базе |
+| `03b-history-needs-review-card.png` | Метка «требует проверки» + причина `no_matching_snippets` |
+| `04-export-json.png` | Экспорт JSON |
+| `05-export-csv.png` | Экспорт CSV |
+| `architecture.png` / `00-architecture-drawio.png` | Схема архитектуры |
+
 ## Сложности и как решал(а)
 
 - Нужна работа без ключа LLM для воспроизводимости → offline extractive-режим.  
