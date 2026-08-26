@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Архитектура — Система знаний команды</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --ink: #102033;
+      --muted: #3d5166;
+      --line: #1f6feb;
+      --box: #ffffff;
+      --border: #c9d6e5;
+      --warn: #b54708;
+      --warn-bg: #fff4e5;
+      --safe: #0b6e4f;
+      --safe-bg: #e8f7f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    .board {
+      width: 1800px;
+      min-height: 980px;
+      padding: 36px 40px 48px;
+      background: linear-gradient(180deg, #eef3f9 0%, #f8fafc 100%);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 42px;
+      line-height: 1.2;
+      text-align: center;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 36px;
+      text-align: center;
+      font-size: 22px;
+      color: var(--muted);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 18px;
+      align-items: stretch;
+      position: relative;
+    }
+    .card {
+      background: var(--box);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 14px;
+      min-height: 150px;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+      position: relative;
+    }
+    .card .num {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 12px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.25;
+    }
+    .card p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .arrows {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 18px;
+      margin: 10px 0 8px;
+      height: 36px;
+    }
+    .arrows .slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--line);
+      font-weight: 700;
+    }
+    .arrows .slot span {
+      font-size: 15px;
+      color: var(--muted);
+      margin-right: 8px;
+      font-weight: 600;
+    }
+    .branch {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .note, .review, .safe {
+      border-radius: 16px;
+      padding: 22px 20px;
+      border: 2px dashed #d0a24c;
+      background: var(--warn-bg);
+      color: var(--warn);
+      min-height: 140px;
+    }
+    .review h3, .safe h3, .note h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+    .review p, .safe p, .note p {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+    .safe {
+      border-color: #6fbf9a;
+      background: var(--safe-bg);
+      color: var(--safe);
+    }
+    .note {
+      border-style: solid;
+      border-color: #9db4cb;
+      background: #fff;
+      color: var(--ink);
+    }
+    .note code, .review code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 18px;
+      background: rgba(255,255,255,0.7);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .legend {
+      margin-top: 28px;
+      font-size: 18px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="board" id="board">
+    <h1>Система знаний команды: архитектура</h1>
+    <p class="subtitle">Веб-панель → API → БД → поиск → LLM → контроль качества → аудит</p>
+
+    <div class="flow">
+      <div class="card">
+        <div class="num">1</div>
+        <h2>Веб-панель</h2>
+        <p>Документы, вопросы, история</p>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h2>FastAPI</h2>
+        <p>Принимает запросы</p>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h2>SQLite</h2>
+        <p>Документы, фрагменты, вопросы</p>
+      </div>
+      <div class="card">
+        <div class="num">4</div>
+        <h2>Поиск</h2>
+        <p>Находит подходящие фрагменты</p>
+      </div>
+      <div class="card">
+        <div class="num">5</div>
+        <h2>LLM / ProxyAPI</h2>
+        <p>Ответ только по контексту</p>
+      </div>
+      <div class="card">
+        <div class="num">6</div>
+        <h2>Контроль качества</h2>
+        <p>Строгий JSON, источники, confidence</p>
+      </div>
+      <div class="card">
+        <div class="num">7</div>
+        <h2>Аудит</h2>
+        <p>Вход, выход, статус, ошибка, время</p>
+      </div>
+    </div>
+
+    <div class="arrows">
+      <div class="slot"></div>
+      <div class="slot"><span>запрос</span>→</div>
+      <div class="slot"><span>данные</span>→</div>
+      <div class="slot"><span>фрагменты</span>→</div>
+      <div class="slot"><span>контекст</span>→</div>
+      <div class="slot"><span>JSON</span>→</div>
+      <div class="slot"><span>запись</span>→</div>
+    </div>
+
+    <div class="branch">
+      <div class="note">
+        <h3>Если фрагментов нет</h3>
+        <p>LLM не вызывается. Сразу уходим в ручную проверку.</p>
+      </div>
+      <div class="review">
+        <h3>Ручная проверка</h3>
+        <p><code>needs_review = true</code><br/>нет источников или confidence=low</p>
+      </div>
+      <div class="safe">
+        <h3>Безопасный ответ</h3>
+        <p>«Данных недостаточно»</p>
+      </div>
+    </div>
+
+    <p class="legend">Скриншот схемы для сдачи проекта · Team Knowledge Base</p>
+  </div>
+</body>
+</html>
