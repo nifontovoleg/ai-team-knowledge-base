@@ -262,49 +262,27 @@ async def build() -> None:
 
         images = sec["images"]
         slice_dur = dur / len(images)
-        part_list: list[str] = []
+        frames: list[tuple[Path, float]] = []
 
         for ii, image_name in enumerate(images):
             frame = WORK / f"frame_{frame_i:03d}.png"
             frame_i += 1
             make_frame(image_name, sec["title"], sec["caption"], frame)
-
-            # Last slice absorbs rounding remainder
             this_dur = slice_dur if ii < len(images) - 1 else (dur - slice_dur * (len(images) - 1))
             this_dur = max(this_dur, 0.8)
+            frames.append((frame, this_dur))
 
-            # Silent video for this still
-            still = WORK / f"still_{si:02d}_{ii:02d}.mp4"
-            ffmpeg_ok(
-                [
-                    "ffmpeg",
-                    "-y",
-                    "-loop",
-                    "1",
-                    "-i",
-                    str(frame),
-                    "-f",
-                    "lavfi",
-                    "-i",
-                    "anullsrc=channel_layout=mono:sample_rate=24000",
-                    "-c:v",
-                    "libx264",
-                    "-tune",
-                    "stillimage",
-                    "-c:a",
-                    "aac",
-                    "-pix_fmt",
-                    "yuv420p",
-                    "-t",
-                    f"{this_dur:.3f}",
-                    str(still),
-                ]
-            )
-            part_list.append(f"file '{still.as_posix()}'")
+        # Image concat list (last file repeated without duration — ffmpeg concat rule)
+        img_list = WORK / f"images_{si:02d}.txt"
+        lines = ["ffconcat version 1.0"]
+        for frame, this_dur in frames:
+            lines.append(f"file '{frame.as_posix()}'")
+            lines.append(f"duration {this_dur:.3f}")
+        lines.append(f"file '{frames[-1][0].as_posix()}'")
+        img_list.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-        visuals_concat = WORK / f"visuals_{si:02d}.txt"
-        visuals_concat.write_text("\n".join(part_list), encoding="utf-8")
-        visuals_mp4 = WORK / f"visuals_{si:02d}.mp4"
+        section_mp4 = WORK / f"section_{si:02d}.mp4"
+        # Explicit maps: video from slides, audio from TTS (do not keep silent track)
         ffmpeg_ok(
             [
                 "ffmpeg",
@@ -314,32 +292,52 @@ async def build() -> None:
                 "-safe",
                 "0",
                 "-i",
-                str(visuals_concat),
-                "-c",
-                "copy",
-                str(visuals_mp4),
-            ]
-        )
-
-        section_mp4 = WORK / f"section_{si:02d}.mp4"
-        ffmpeg_ok(
-            [
-                "ffmpeg",
-                "-y",
-                "-i",
-                str(visuals_mp4),
+                str(img_list),
                 "-i",
                 str(audio),
+                "-map",
+                "0:v:0",
+                "-map",
+                "1:a:0",
                 "-c:v",
-                "copy",
+                "libx264",
+                "-tune",
+                "stillimage",
+                "-pix_fmt",
+                "yuv420p",
+                "-r",
+                "30",
                 "-c:a",
                 "aac",
                 "-b:a",
                 "192k",
+                "-ar",
+                "44100",
+                "-ac",
+                "1",
                 "-shortest",
                 str(section_mp4),
             ]
         )
+        # Verify audio is not silent
+        a_br = subprocess.check_output(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_entries",
+                "stream=bit_rate",
+                "-of",
+                "default=nw=1:nk=1",
+                str(section_mp4),
+            ],
+            text=True,
+        ).strip()
+        if not a_br.isdigit() or int(a_br) < 20000:
+            raise RuntimeError(f"section {si} audio bitrate too low: {a_br}")
+
         concat_lines.append(f"file '{section_mp4.as_posix()}'")
 
     list_file = WORK / "concat.txt"
