@@ -102,7 +102,9 @@
 
 ## Демонстрация
 
-Записать демо 2–4 минуты по сценарию в [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md). Ссылку на видео вставить сюда после записи: `_TODO_VIDEO_URL_`.
+Записать демо 2–4 минуты по сценарию в [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md).  
+Готовое тихое демо (запись UI): [evidence/demo.webm](./evidence/demo.webm).  
+Ссылку на онлайн-хостинг (YouTube/Drive) вставить сюда после загрузки: `_TODO_VIDEO_URL_`.
 
 ### Скриншоты (доказательства)
 
@@ -118,6 +120,7 @@
 | `04-export-json.png` | Экспорт JSON |
 | `05-export-csv.png` | Экспорт CSV |
 | `architecture.png` / `00-architecture-drawio.png` | Схема архитектуры |
+| `demo.webm` | Тихое демо-видео панели (автозапись) |
 
 ## Сложности и как решал(а)
 
