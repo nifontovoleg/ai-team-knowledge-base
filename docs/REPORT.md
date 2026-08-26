@@ -106,6 +106,9 @@
 Готовое тихое демо (запись UI): [evidence/demo.webm](./evidence/demo.webm).  
 Онлайн: [демо на Google Диске](https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing).
 
+Видео защиты (~6 мин, голос Dmitry): [evidence/defense.mp4](./evidence/defense.mp4), текст — [evidence/defense_script.md](./evidence/defense_script.md).  
+Ссылка на защиту в облаке (после загрузки на Диск): `_TODO_DEFENSE_VIDEO_URL_`.
+
 ### Скриншоты (доказательства)
 
 Папка [docs/evidence/](./evidence/):
@@ -121,6 +124,8 @@
 | `05-export-csv.png` | Экспорт CSV |
 | `architecture.png` / `00-architecture-drawio.png` | Схема архитектуры |
 | `demo.webm` | Тихое демо-видео панели (автозапись) |
+| `defense.mp4` | Видео защиты ~6 мин (голос Dmitry) |
+| `defense_script.md` | Текст озвучки защиты |
 
 ## Сложности и как решал(а)
 

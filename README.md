@@ -25,6 +25,12 @@
 Файл также лежит в репозитории: [`docs/evidence/demo.webm`](docs/evidence/demo.webm)  
 На GitHub у `.webm` часто **нет** предпросмотра — только кнопка Download. Для просмотра удобнее ссылка на Диск выше.
 
+### Видео защиты (5–7 мин)
+
+Файл: [`docs/evidence/defense.mp4`](docs/evidence/defense.mp4)  
+Голос: Microsoft Edge TTS `ru-RU-DmitryNeural`. Текст: [`docs/evidence/defense_script.md`](docs/evidence/defense_script.md).  
+На GitHub большой файл может открываться только через Download — для сдачи лучше загрузить `defense.mp4` на Google Диск и вставить ссылку в [docs/REPORT.md](docs/REPORT.md).
+
 Скриншоты и отчёт: [docs/evidence/](docs/evidence/), [docs/REPORT.md](docs/REPORT.md).
 
 ## Быстрый старт (≤ 10 минут)
