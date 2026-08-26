@@ -27,9 +27,10 @@
 
 ### Видео защиты (5–7 мин)
 
+Смотреть онлайн: **https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing**
+
 Файл: [`docs/evidence/defense.mp4`](docs/evidence/defense.mp4)  
-Голос: Microsoft Edge TTS `ru-RU-DmitryNeural`. Текст: [`docs/evidence/defense_script.md`](docs/evidence/defense_script.md).  
-На GitHub большой файл может открываться только через Download — для сдачи лучше загрузить `defense.mp4` на Google Диск и вставить ссылку в [docs/REPORT.md](docs/REPORT.md).
+Голос: Microsoft Edge TTS `ru-RU-DmitryNeural`. Текст: [`docs/evidence/defense_script.md`](docs/evidence/defense_script.md).
 
 Скриншоты и отчёт: [docs/evidence/](docs/evidence/), [docs/REPORT.md](docs/REPORT.md).
 

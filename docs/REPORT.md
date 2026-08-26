@@ -107,7 +107,7 @@
 Онлайн: [демо на Google Диске](https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing).
 
 Видео защиты (~6 мин, голос Dmitry): [evidence/defense.mp4](./evidence/defense.mp4), текст — [evidence/defense_script.md](./evidence/defense_script.md).  
-Ссылка на защиту в облаке (после загрузки на Диск): `_TODO_DEFENSE_VIDEO_URL_`.
+Онлайн: [защита на Google Диске](https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing).
 
 ### Скриншоты (доказательства)
 
