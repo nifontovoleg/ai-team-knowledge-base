@@ -17,6 +17,16 @@
 
 ![Архитектура системы знаний команды](docs/evidence/architecture.png)
 
+## Демо-видео
+
+Смотреть онлайн (Google Диск, со встроенным плеером):  
+**https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing**
+
+Файл также лежит в репозитории: [`docs/evidence/demo.webm`](docs/evidence/demo.webm)  
+На GitHub у `.webm` часто **нет** предпросмотра — только кнопка Download. Для просмотра удобнее ссылка на Диск выше.
+
+Скриншоты и отчёт: [docs/evidence/](docs/evidence/), [docs/REPORT.md](docs/REPORT.md).
+
 ## Быстрый старт (≤ 10 минут)
 
 ### Вариант A — локально
