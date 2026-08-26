@@ -102,11 +102,12 @@
 
 ## Демонстрация
 
-Записать демо 2–4 минуты по сценарию в [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md).  
-Готовое тихое демо (запись UI): [evidence/demo.webm](./evidence/demo.webm).  
+Сценарий записи: [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md).
+
+**Демо 2–4 мин:** [evidence/demo.webm](./evidence/demo.webm)  
 Онлайн: [демо на Google Диске](https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing).
 
-Видео защиты (~6 мин, голос Dmitry): [evidence/defense.mp4](./evidence/defense.mp4), текст — [evidence/defense_script.md](./evidence/defense_script.md).  
+**Защита 5–7 мин:** [evidence/defense.mp4](./evidence/defense.mp4), текст — [evidence/defense_script.md](./evidence/defense_script.md).  
 Онлайн: [защита на Google Диске](https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing).
 
 ### Скриншоты (доказательства)
@@ -139,3 +140,23 @@
 - Роли и доступ к документам.  
 - Загрузка файлов (PDF/Markdown) вместо только raw text.  
 - Кнопка «подтвердить/исправить» для needs_review с обратной записью в базу.
+
+## Текст для сдачи ДЗ
+
+Скопируйте в форму домашнего задания:
+
+---
+
+**Проект:** Система знаний команды (поиск по своим данным + память)
+
+**Репозиторий:** https://github.com/nifontovoleg/ai-team-knowledge-base
+
+**Отчёт:** https://github.com/nifontovoleg/ai-team-knowledge-base/blob/main/docs/REPORT.md
+
+**Демо-видео (2–4 мин):** https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing
+
+**Видео защиты (5–7 мин):** https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing
+
+**Кратко:** веб-панель + FastAPI + SQLite. Поиск по фрагментам документов, ответ LLM в строгом JSON с цитатами-источниками. Если данных нет — `needs_review=true` и честный отказ вместо выдумки. История QA, audit_runs, экспорт JSON/CSV. Запуск по README/Docker за 10 минут, 10/10 контрольных вопросов проходят через `python -m scripts.run_question_checks`.
+
+---

@@ -168,5 +168,12 @@ python -m scripts.run_question_checks
 
 ## Сдача
 
-Отчёт: [docs/REPORT.md](docs/REPORT.md)  
-Скрипт защиты/демо: [docs/DEMO_AND_DEFENSE.md](docs/DEMO_AND_DEFENSE.md)
+| Материал | Ссылка |
+|----------|--------|
+| Репозиторий | https://github.com/nifontovoleg/ai-team-knowledge-base |
+| Отчёт | [docs/REPORT.md](docs/REPORT.md) |
+| Демо 2–4 мин | https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing |
+| Защита 5–7 мин | https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing |
+| Сценарии записи | [docs/DEMO_AND_DEFENSE.md](docs/DEMO_AND_DEFENSE.md) |
+
+Готовый текст для формы ДЗ — в конце [docs/REPORT.md](docs/REPORT.md#текст-для-сдачи-дз).
