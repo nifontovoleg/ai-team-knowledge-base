@@ -183,7 +183,10 @@ th {
   font-weight: 700;
 }
 
-.badge.on { display: inline-flex; }
+/* display выше перебивает HTML-атрибут hidden — явно прячем */
+.badge[hidden] {
+  display: none !important;
+}
 
 .result, .card {
   margin-top: 1rem;
