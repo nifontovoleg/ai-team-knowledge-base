@@ -104,7 +104,7 @@
 
 Записать демо 2–4 минуты по сценарию в [DEMO_AND_DEFENSE.md](DEMO_AND_DEFENSE.md).  
 Готовое тихое демо (запись UI): [evidence/demo.webm](./evidence/demo.webm).  
-Ссылку на онлайн-хостинг (YouTube/Drive) вставить сюда после загрузки: `_TODO_VIDEO_URL_`.
+Онлайн: [демо на Google Диске](https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing).
 
 ### Скриншоты (доказательства)
 
