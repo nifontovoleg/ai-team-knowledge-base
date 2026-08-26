@@ -15,7 +15,7 @@
 
 Подробная схема: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-![Архитектура системы знаний команды](docs/evidence/day-01-architecture.png)
+![Архитектура системы знаний команды](docs/evidence/architecture.png)
 
 ## Быстрый старт (≤ 10 минут)
 
