@@ -1,4 +1,4 @@
-"""Build 5–7 min defense video: slides + Edge TTS (ru-RU-DmitryNeural)."""
+"""Build defense video: real product screenshots + Edge TTS (Dmitry)."""
 
 from __future__ import annotations
 
@@ -19,12 +19,17 @@ VOICE = "ru-RU-DmitryNeural"
 RATE = "-15%"
 FINAL_MP4 = OUT / "defense.mp4"
 SCRIPT_MD = OUT / "defense_script.md"
+W, H = 1920, 1080
 
-# ~6 minutes of speech when paced calmly
-SECTIONS: list[dict[str, str]] = [
+SECTIONS: list[dict] = [
     {
-        "title": "Защита проекта",
-        "subtitle": "Система знаний команды",
+        "title": "Проблема и ценность",
+        "caption": "Витрина документов и ответы только по своим данным",
+        "images": [
+            "01-documents-showcase.png",
+            "02-ask-success.png",
+            "02b-ask-success-with-source-doc.png",
+        ],
         "text": (
             "Здравствуйте. Представляю проект «Система знаний команды» — поиск по своим данным плюс память. "
             "Проблема простая: знания команды разбросаны по файлам и чатам, одни и те же вопросы повторяются, "
@@ -38,7 +43,12 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "Контекст и ограничения",
-        "subtitle": "Что сознательно не делали",
+        "caption": "Веб-панель, SQLite, keyword-поиск, Docker и offline-режим",
+        "images": [
+            "01-documents-showcase.png",
+            "02-ask-success.png",
+            "architecture.png",
+        ],
         "text": (
             "Проект сделан как воспроизводимая учебная и рабочая витрина. "
             "Интерфейс — только веб-панель с тремя вкладками: документы, вопросы и история. "
@@ -51,7 +61,12 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "Архитектура",
-        "subtitle": "Панель → API → БД → поиск → LLM → quality → audit",
+        "caption": "Панель → FastAPI → SQLite → поиск → LLM JSON → quality → audit",
+        "images": [
+            "architecture.png",
+            "00-architecture-drawio.png",
+            "02-ask-success.png",
+        ],
         "text": (
             "Архитектура линейная и прозрачная. Пользователь работает в веб-панели. "
             "Запросы принимает FastAPI. Документы и абзацы-фрагменты snippets хранятся в SQLite. "
@@ -66,7 +81,12 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "Риски и меры",
-        "subtitle": "Минимум пять контролей",
+        "caption": "needs_review, пустые источники, причина no_matching_snippets",
+        "images": [
+            "03-ask-needs-review-input.png",
+            "03b-history-needs-review-card.png",
+            "02-ask-success.png",
+        ],
         "text": (
             "Риск первый — галлюцинации модели. Мера: ответ только по context, строгий JSON и needs review. "
             "Риск второй — утечка секретов. Мера: ключи только в env, gitignore, запрет секретов в документах. "
@@ -78,7 +98,12 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "Внедрение за 1 день",
-        "subtitle": "Практический план",
+        "caption": "Документы → контрольные вопросы → история и аудит",
+        "images": [
+            "01-documents-showcase.png",
+            "02-ask-success.png",
+            "03b-history-needs-review-card.png",
+        ],
         "text": (
             "План внедрения на один рабочий день. "
             "Утро: поднять сервис по README или Docker Compose, скопировать env example в env. "
@@ -91,7 +116,12 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "План развития",
-        "subtitle": "Что дальше",
+        "caption": "Экспорт, история QA и путь к гибридному поиску",
+        "images": [
+            "04-export-json.png",
+            "05-export-csv.png",
+            "architecture.png",
+        ],
         "text": (
             "План развития из четырёх шагов. "
             "Первое — гибридный поиск: keyword плюс embeddings для более точного нахождения фрагментов. "
@@ -104,7 +134,13 @@ SECTIONS: list[dict[str, str]] = [
     },
     {
         "title": "Мини-экономика и итог",
-        "subtitle": "Ценность и результат",
+        "caption": "Ответы с источниками, review и экспорт результатов",
+        "images": [
+            "02-ask-success.png",
+            "05-export-csv.png",
+            "03b-history-needs-review-card.png",
+            "01-documents-showcase.png",
+        ],
         "text": (
             "Мини-экономика из отчёта. "
             "До внедрения типовой вопрос занимает около пятнадцати минут поиска по файлам и людям. "
@@ -122,59 +158,52 @@ SECTIONS: list[dict[str, str]] = [
 ]
 
 
-def font(size: int) -> ImageFont.FreeTypeFont:
-    path = Path(r"C:\Windows\Fonts\segoeui.ttf")
-    bold = Path(r"C:\Windows\Fonts\segoeuib.ttf")
+def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    regular = Path(r"C:\Windows\Fonts\segoeui.ttf")
+    bold_path = Path(r"C:\Windows\Fonts\segoeuib.ttf")
+    path = bold_path if bold and bold_path.exists() else regular
     try:
-        return ImageFont.truetype(str(bold if size >= 40 else path), size)
+        return ImageFont.truetype(str(path), size)
     except OSError:
         return ImageFont.load_default()
 
 
-def wrap(draw: ImageDraw.ImageDraw, text: str, fnt: ImageFont.ImageFont, max_width: int) -> list[str]:
-    words = text.split()
-    lines: list[str] = []
-    cur = ""
-    for w in words:
-        trial = f"{cur} {w}".strip()
-        if draw.textlength(trial, font=fnt) <= max_width:
-            cur = trial
-        else:
-            if cur:
-                lines.append(cur)
-            cur = w
-    if cur:
-        lines.append(cur)
-    return lines
+def cover_fit(src: Image.Image, tw: int, th: int) -> Image.Image:
+    """Scale image to cover target box, center-crop."""
+    sw, sh = src.size
+    scale = max(tw / sw, th / sh)
+    nw, nh = int(sw * scale), int(sh * scale)
+    resized = src.resize((nw, nh), Image.Resampling.LANCZOS)
+    left = (nw - tw) // 2
+    top = (nh - th) // 2
+    return resized.crop((left, top, left + tw, top + th))
 
 
-def make_slide(idx: int, title: str, subtitle: str, out_path: Path) -> None:
-    w, h = 1920, 1080
-    img = Image.new("RGB", (w, h), "#0f2740")
-    draw = ImageDraw.Draw(img)
-    # accent bar
-    draw.rectangle((0, 0, 18, h), fill="#2f6fed")
-    draw.rectangle((0, h - 18, w, h), fill="#1b3a57")
+def make_frame(image_name: str, title: str, caption: str, out_path: Path) -> None:
+    src_path = OUT / image_name
+    if not src_path.exists():
+        raise FileNotFoundError(src_path)
 
-    title_font = font(64)
-    sub_font = font(36)
-    meta_font = font(28)
+    base = Image.new("RGB", (W, H), "#0b1c2e")
+    shot = Image.open(src_path).convert("RGB")
+    # Keep a band for caption; fit screenshot into upper area
+    content_h = H - 170
+    fitted = cover_fit(shot, W - 80, content_h - 40)
+    base.paste(fitted, (40, 30))
 
-    draw.text((80, 120), f"{idx + 1} / {len(SECTIONS)}", fill="#8fb3d9", font=meta_font)
-    draw.text((80, 200), title, fill="#ffffff", font=title_font)
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    draw.rectangle((0, H - 170, W, H), fill=(8, 22, 38, 230))
+    draw.rectangle((0, 0, 14, H), fill=(47, 111, 237, 255))
+    base = Image.alpha_composite(base.convert("RGBA"), overlay).convert("RGB")
 
-    y = 320
-    for line in wrap(draw, subtitle, sub_font, w - 160):
-        draw.text((80, y), line, fill="#cfe0f5", font=sub_font)
-        y += 52
-
-    footer = "Система знаний команды · защита проекта"
-    draw.text((80, h - 90), footer, fill="#7f9bb8", font=meta_font)
-    img.save(out_path, "PNG")
+    draw = ImageDraw.Draw(base)
+    draw.text((40, H - 145), title, fill="#ffffff", font=font(42, bold=True))
+    draw.text((40, H - 85), caption, fill="#c5d7eb", font=font(28))
+    base.save(out_path, "PNG")
 
 
-def wav_duration(path: Path) -> float:
-    # edge-tts writes mp3; use ffprobe
+def probe_duration(path: Path) -> float:
     out = subprocess.check_output(
         [
             "ffprobe",
@@ -191,9 +220,8 @@ def wav_duration(path: Path) -> float:
     return float(out)
 
 
-async def synth_section(text: str, mp3_path: Path) -> None:
-    communicate = edge_tts.Communicate(text, VOICE, rate=RATE)
-    await communicate.save(str(mp3_path))
+async def synth(text: str, mp3_path: Path) -> None:
+    await edge_tts.Communicate(text, VOICE, rate=RATE).save(str(mp3_path))
 
 
 def write_script_md() -> None:
@@ -201,9 +229,17 @@ def write_script_md() -> None:
     for i, sec in enumerate(SECTIONS, start=1):
         lines.append(f"## {i}. {sec['title']}")
         lines.append("")
+        lines.append(f"Кадры: {', '.join(sec['images'])}")
+        lines.append("")
         lines.append(sec["text"])
         lines.append("")
     SCRIPT_MD.write_text("\n".join(lines), encoding="utf-8")
+
+
+def ffmpeg_ok(cmd: list[str]) -> None:
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+    if proc.returncode != 0:
+        raise RuntimeError(proc.stderr[-2500:] if proc.stderr else "ffmpeg failed")
 
 
 async def build() -> None:
@@ -215,52 +251,101 @@ async def build() -> None:
 
     concat_lines: list[str] = []
     total = 0.0
-    parts: list[Path] = []
+    frame_i = 0
 
-    for i, sec in enumerate(SECTIONS):
-        slide = WORK / f"slide_{i:02d}.png"
-        audio = WORK / f"audio_{i:02d}.mp3"
-        make_slide(i, sec["title"], sec["subtitle"], slide)
-        print(f"TTS {i + 1}/{len(SECTIONS)}: {sec['title']}", flush=True)
-        await synth_section(sec["text"], audio)
-        dur = wav_duration(audio)
+    for si, sec in enumerate(SECTIONS):
+        audio = WORK / f"audio_{si:02d}.mp3"
+        print(f"TTS {si + 1}/{len(SECTIONS)}: {sec['title']}", flush=True)
+        await synth(sec["text"], audio)
+        dur = probe_duration(audio)
         total += dur
-        part = WORK / f"part_{i:02d}.mp4"
-        cmd = [
-            "ffmpeg",
-            "-y",
-            "-loop",
-            "1",
-            "-i",
-            str(slide),
-            "-i",
-            str(audio),
-            "-c:v",
-            "libx264",
-            "-tune",
-            "stillimage",
-            "-c:a",
-            "aac",
-            "-b:a",
-            "192k",
-            "-pix_fmt",
-            "yuv420p",
-            "-shortest",
-            "-t",
-            f"{dur:.3f}",
-            str(part),
-        ]
-        proc = subprocess.run(cmd, capture_output=True, text=True)
-        if proc.returncode != 0:
-            raise RuntimeError(proc.stderr[-2000:] if proc.stderr else "ffmpeg part failed")
-        parts.append(part)
-        concat_lines.append(f"file '{part.as_posix()}'")
+
+        images = sec["images"]
+        slice_dur = dur / len(images)
+        part_list: list[str] = []
+
+        for ii, image_name in enumerate(images):
+            frame = WORK / f"frame_{frame_i:03d}.png"
+            frame_i += 1
+            make_frame(image_name, sec["title"], sec["caption"], frame)
+
+            # Last slice absorbs rounding remainder
+            this_dur = slice_dur if ii < len(images) - 1 else (dur - slice_dur * (len(images) - 1))
+            this_dur = max(this_dur, 0.8)
+
+            # Silent video for this still
+            still = WORK / f"still_{si:02d}_{ii:02d}.mp4"
+            ffmpeg_ok(
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-loop",
+                    "1",
+                    "-i",
+                    str(frame),
+                    "-f",
+                    "lavfi",
+                    "-i",
+                    "anullsrc=channel_layout=mono:sample_rate=24000",
+                    "-c:v",
+                    "libx264",
+                    "-tune",
+                    "stillimage",
+                    "-c:a",
+                    "aac",
+                    "-pix_fmt",
+                    "yuv420p",
+                    "-t",
+                    f"{this_dur:.3f}",
+                    str(still),
+                ]
+            )
+            part_list.append(f"file '{still.as_posix()}'")
+
+        visuals_concat = WORK / f"visuals_{si:02d}.txt"
+        visuals_concat.write_text("\n".join(part_list), encoding="utf-8")
+        visuals_mp4 = WORK / f"visuals_{si:02d}.mp4"
+        ffmpeg_ok(
+            [
+                "ffmpeg",
+                "-y",
+                "-f",
+                "concat",
+                "-safe",
+                "0",
+                "-i",
+                str(visuals_concat),
+                "-c",
+                "copy",
+                str(visuals_mp4),
+            ]
+        )
+
+        section_mp4 = WORK / f"section_{si:02d}.mp4"
+        ffmpeg_ok(
+            [
+                "ffmpeg",
+                "-y",
+                "-i",
+                str(visuals_mp4),
+                "-i",
+                str(audio),
+                "-c:v",
+                "copy",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "192k",
+                "-shortest",
+                str(section_mp4),
+            ]
+        )
+        concat_lines.append(f"file '{section_mp4.as_posix()}'")
 
     list_file = WORK / "concat.txt"
     list_file.write_text("\n".join(concat_lines), encoding="utf-8")
-
     tmp_out = WORK / "defense.mp4"
-    proc = subprocess.run(
+    ffmpeg_ok(
         [
             "ffmpeg",
             "-y",
@@ -273,15 +358,16 @@ async def build() -> None:
             "-c",
             "copy",
             str(tmp_out),
-        ],
-        capture_output=True,
-        text=True,
+        ]
     )
-    if proc.returncode != 0:
-        raise RuntimeError(proc.stderr[-2000:] if proc.stderr else "ffmpeg concat failed")
-
     shutil.copy2(tmp_out, FINAL_MP4)
-    meta = {"voice": VOICE, "rate": RATE, "sections": len(SECTIONS), "duration_sec": round(total, 2)}
+    meta = {
+        "voice": VOICE,
+        "rate": RATE,
+        "sections": len(SECTIONS),
+        "duration_sec": round(total, 2),
+        "style": "product_screenshots",
+    }
     (OUT / "defense_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(meta, ensure_ascii=False), flush=True)
     print(f"saved {FINAL_MP4}", flush=True)

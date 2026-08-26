@@ -2,5 +2,6 @@
   "voice": "ru-RU-DmitryNeural",
   "rate": "-15%",
   "sections": 7,
-  "duration_sec": 361.97
+  "duration_sec": 361.97,
+  "style": "product_screenshots"
 }
