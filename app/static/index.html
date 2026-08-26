@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Система знаний команды</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="eyebrow">Team Knowledge Base</p>
+      <h1>Система знаний команды</h1>
+      <p class="lead">Поиск по своим данным + память. Ответы только с источниками или честная ручная проверка.</p>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="documents" type="button">Документы</button>
+      <button class="tab" data-tab="ask" type="button">Вопросы</button>
+      <button class="tab" data-tab="history" type="button">История</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="documents" class="panel active">
+      <div class="grid two">
+        <div>
+          <h2>Добавить документ</h2>
+          <form id="doc-form">
+            <label>Заголовок
+              <input id="doc-title" name="title" required maxlength="300" placeholder="Правила работы команды" />
+            </label>
+            <label>Текст
+              <textarea id="doc-text" name="text" required rows="12" placeholder="Текст документа…"></textarea>
+            </label>
+            <button type="submit">Сохранить</button>
+          </form>
+          <p id="doc-form-status" class="status" hidden></p>
+        </div>
+        <div>
+          <div class="row-between">
+            <h2>Витрина документов</h2>
+            <button type="button" id="reload-docs" class="ghost">Обновить</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Заголовок</th>
+                  <th>Создан</th>
+                  <th>document_id</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="docs-body">
+                <tr><td colspan="4">Загрузка…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ask" class="panel">
+      <h2>Задать вопрос</h2>
+      <form id="ask-form" class="ask-form">
+        <label>Вопрос
+          <textarea id="ask-question" rows="3" required placeholder="Как у нас принято отвечать клиенту при задержке?"></textarea>
+        </label>
+        <button type="submit">Спросить</button>
+      </form>
+      <div id="ask-result" class="result" hidden>
+        <div class="row-between">
+          <h3>Ответ</h3>
+          <span id="ask-badge" class="badge" hidden>требует проверки</span>
+        </div>
+        <p id="ask-answer"></p>
+        <p id="ask-error" class="error" hidden></p>
+        <h4>Источники</h4>
+        <ul id="ask-sources"></ul>
+      </div>
+    </section>
+
+    <section id="history" class="panel">
+      <div class="row-between">
+        <h2>История вопросов и аудит</h2>
+        <div class="actions">
+          <label class="check">
+            <input type="checkbox" id="filter-review" />
+            только «требует проверки»
+          </label>
+          <a class="ghost buttonish" href="/export/qa?format=json" download>Экспорт JSON</a>
+          <a class="ghost buttonish" href="/export/qa?format=csv" download>Экспорт CSV</a>
+          <button type="button" id="reload-history" class="ghost">Обновить</button>
+        </div>
+      </div>
+      <div class="grid two">
+        <div>
+          <h3>QA runs</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Когда</th>
+                  <th>Вопрос</th>
+                  <th>Review</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="qa-body">
+                <tr><td colspan="4">Загрузка…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p id="qa-open-status" class="error" hidden></p>
+        </div>
+        <div>
+          <h3>Audit runs</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Когда</th>
+                  <th>Action</th>
+                  <th>Status</th>
+                  <th>ms</th>
+                </tr>
+              </thead>
+              <tbody id="audit-body">
+                <tr><td colspan="4">Загрузка…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="doc-dialog">
+    <form method="dialog" class="dialog-body">
+      <h3 id="dialog-title">Документ</h3>
+      <p class="meta" id="dialog-meta"></p>
+      <pre id="dialog-text"></pre>
+      <button value="close">Закрыть</button>
+    </form>
+  </dialog>
+
+  <dialog id="qa-dialog">
+    <form method="dialog" class="dialog-body">
+      <div class="row-between">
+        <h3>Карточка вопроса</h3>
+        <span id="qa-dialog-badge" class="badge" hidden>требует проверки</span>
+      </div>
+      <p class="meta" id="qa-dialog-meta"></p>
+      <p id="qa-card-q" class="strong"></p>
+      <p id="qa-card-a"></p>
+      <p id="qa-card-error" class="error" hidden></p>
+      <h4>Источники</h4>
+      <ul id="qa-card-sources"></ul>
+      <button value="close">Закрыть</button>
+    </form>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

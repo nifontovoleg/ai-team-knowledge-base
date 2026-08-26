@@ -1,0 +1,10 @@
+{"question": "До какого времени нужно провести стендап?", "expected_needs_review": false, "why": "Есть в правилах работы команды", "document": "Правила работы команды"}
+{"question": "Куда нельзя писать секреты и токены?", "expected_needs_review": false, "why": "Правило про секреты в правилах команды", "document": "Правила работы команды"}
+{"question": "Какой стандартный срок подготовки отчёта для клиента?", "expected_needs_review": false, "why": "Есть в FAQ клиентов", "document": "Частые вопросы клиентов"}
+{"question": "Что делать при задержке поставки клиенту?", "expected_needs_review": false, "why": "FAQ + шаблон B", "document": "Частые вопросы клиентов"}
+{"question": "Какой шаблон использовать для сообщения о задержке?", "expected_needs_review": false, "why": "Шаблон B в шаблонах ответов", "document": "Шаблоны ответов"}
+{"question": "Что означает метка needs_review?", "expected_needs_review": false, "why": "Определение в словаре терминов", "document": "Словарь терминов"}
+{"question": "Какие шаги входят в процесс запуска задачи перед релизом?", "expected_needs_review": false, "why": "Описано в процессе запуска задачи", "document": "Процесс запуска задачи"}
+{"question": "Какой размер бонуса за лучший мем месяца?", "expected_needs_review": true, "why": "Такой темы нет в базе", "document": null}
+{"question": "Сколько стоит абонемент в марсианский фитнес-клуб Zogatron?", "expected_needs_review": true, "why": "Нет в документах", "document": null}
+{"question": "Какой пароль от квантового чайника Nebula-7?", "expected_needs_review": true, "why": "Секретов и таких данных в базе нет", "document": null}

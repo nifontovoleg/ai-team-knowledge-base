@@ -1,0 +1,246 @@
+:root {
+  --bg: #f3efe6;
+  --ink: #1c2a24;
+  --muted: #5b6b63;
+  --accent: #0f6b57;
+  --accent-2: #c45c26;
+  --line: #d7d0c3;
+  --panel: rgba(255, 252, 246, 0.92);
+  --danger: #8f1d1d;
+  --ok: #0f6b57;
+  --shadow: 0 18px 40px rgba(28, 42, 36, 0.08);
+  --radius: 18px;
+  --font-display: "Segoe UI", "Trebuchet MS", sans-serif;
+  --font-body: "Segoe UI", "Trebuchet MS", sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 10% 10%, #e7f2ec 0, transparent 40%),
+    radial-gradient(circle at 90% 0%, #f7e7d8 0, transparent 35%),
+    linear-gradient(160deg, #f7f3ea, #ebe4d7 55%, #e4eee8);
+}
+
+.top {
+  padding: 2rem clamp(1rem, 4vw, 3rem) 1rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.lead {
+  margin: 0;
+  max-width: 42rem;
+  color: var(--muted);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab, button, .buttonish {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: #fffaf2;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tab.active, button[type="submit"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #f7fffb;
+}
+
+.ghost {
+  background: transparent;
+}
+
+main {
+  padding: 0 clamp(1rem, 4vw, 3rem) 3rem;
+}
+
+.panel {
+  display: none;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.panel.active { display: block; }
+
+.grid.two {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .grid.two { grid-template-columns: 1fr 1fr; }
+}
+
+h2, h3, h4 { margin-top: 0; }
+
+form, .ask-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+input, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+}
+
+.table-wrap {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th, td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: #faf7f0;
+}
+
+.row-between, .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions { justify-content: flex-end; }
+
+.status { color: var(--ok); }
+.error { color: var(--danger); }
+.strong { font-weight: 700; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  background: #f8e4d8;
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.badge.on { display: inline-flex; }
+
+.result, .card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+ul { padding-left: 1.1rem; }
+li { margin: 0.35rem 0; }
+
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0;
+  max-width: min(720px, 92vw);
+}
+
+.dialog-body {
+  padding: 1rem 1.1rem 1.2rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.meta { color: var(--muted); margin: 0; font-size: 0.85rem; }
+
+pre {
+  white-space: pre-wrap;
+  background: #f7f3ea;
+  border-radius: 12px;
+  padding: 0.9rem;
+  max-height: 50vh;
+  overflow: auto;
+  margin: 0;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+}
+
+.linkish {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--accent);
+  text-decoration: underline;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.85rem;
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.82rem;
+}
