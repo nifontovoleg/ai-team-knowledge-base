@@ -176,4 +176,4 @@ python -m scripts.run_question_checks
 | Защита 5–7 мин | https://drive.google.com/file/d/1GQ2_arv9Wcbe0krzqcHqDMvrvDPOUX9s/view?usp=sharing |
 | Сценарии записи | [docs/DEMO_AND_DEFENSE.md](docs/DEMO_AND_DEFENSE.md) |
 
-Готовый текст для формы ДЗ — в конце [docs/REPORT.md](docs/REPORT.md#текст-для-сдачи-дз).
+Готовый текст для формы ТЗ — в конце [docs/REPORT.md](docs/REPORT.md#текст-для-сдачи-дз).
