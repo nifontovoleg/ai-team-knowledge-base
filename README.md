@@ -19,7 +19,7 @@
 
 ## Демо-видео
 
-Смотреть онлайн (Google Диск, со встроенным плеером):  
+Смотреть онлайн (Google Диск, с плеером):  
 **https://drive.google.com/file/d/1rKioZOedc6Mt7scPFfQCEV51A9aaZ8Tq/view?usp=sharing**
 
 Файл также лежит в репозитории: [`docs/evidence/demo.webm`](docs/evidence/demo.webm)  
